@@ -9,8 +9,8 @@
 }
 
 #container{
-  height: 400px;
-  width: 400px;
+  height: 450px;
+  width: 450px;
   border: 1px solid;
   display: flex;
   flex-direction: column;
@@ -19,11 +19,12 @@
 }
 
 #title{
-  height: 60px;
   border: 1px solid;
+  font-size: 42px;
 }
 
 #settings{
+  width: 100%;
   height: 80px;
   border: 1px solid;
   display: flex;
@@ -33,7 +34,9 @@
 
 #display{
   height: 100px;
-  border: 1px solid;
+  width: 250px;
+  border: 8px solid;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -41,10 +44,10 @@
 }
 
 #controls{
-  height: 60px;
+  width: 100px;
   border: 1px solid;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
 }
 
@@ -59,4 +62,12 @@
   display: flex;
   justify-content: center;
   align-content: center;
+}
+
+#session-label, #break-label, #session-length, #break-length, #timer-label{
+  font-size: 24px;
+}
+
+#time-left{
+  font-size: 42px;
 }
