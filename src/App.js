@@ -12,17 +12,21 @@ class App extends Component {
             <div id="settings-left">
               <div id="break-label">Break Length</div>
               <div id="break-settings">
-                <div id="break-decrement"></div>
+                <div id="break-decrement"><i className="fas fa-arrow-down"></i></div>
                 <div id="break-length"></div>
-                <div id="break-increment"></div>  
+                <div id="break-increment"><i className="fas fa-arrow-up"></i>
+
+</div>  
               </div>
             </div>
             <div id="settings-right">
               <div id="session-label">Session Length</div>
               <div id="session-settings">
-                <div id="session-decrement"></div>
+                <div id="session-decrement"><i className="fas fa-arrow-down"></i></div>
                 <div id="session-length"></div>
-                <div id="session-increment"></div> 
+                <div id="session-increment"><i className="fas fa-arrow-up"></i>
+
+</div> 
               </div>
             </div>
           </div>
@@ -31,7 +35,7 @@ class App extends Component {
             <div id="time-left"></div>
           </div>
           <div id="controls">
-            <div id="start-stop"></div>
+            <div id="start-stop"><i class="fas fa-play"></i><i class="fas fa-pause"></i><i class="fas fa-sync"></i></div>
             <div id="reset"></div>
           </div>
         </div>
