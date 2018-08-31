@@ -9,11 +9,13 @@ class App extends Component {
       session:25,
       break:5,
       countDown:0,
-      isOn: false
+      isOn: false,
+      timerLabel: 'Session'
     }
     this.timer=0;
     this.handleClick = this.handleClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
+    this.handleTimer = this.handleTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
   }
   handleClick(e){
@@ -50,7 +52,22 @@ class App extends Component {
     if(init>0){
       this.setState({countDown:init});
     }
-    this.timer=setInterval(()=>(this.setState({countDown:this.state.countDown-1})),1000)
+    this.timer=setInterval(this.handleTimer,1000)
+  }
+  handleTimer(){
+    if(this.state.countDown>0){
+      this.setState({countDown:this.state.countDown-1});
+    } else if(this.state.timerLabel==='Session'){
+      this.setState({
+        countDown:this.state.break*60,
+        timerLabel:'Break'
+      });
+    } else if(this.state.timerLabel==='Break'){
+      this.setState({
+        countDown:this.state.session*60,
+        timerLabel:'Session'
+      });
+    }
   }
   stopTimer(){
     clearInterval(this.timer);
@@ -81,7 +98,7 @@ class App extends Component {
             </div>
           </div>
           <div id="display">
-            <div id="timer-label">Session</div>
+            <div id="timer-label">{this.state.timerLabel}</div>
             <div id="time-left">{('0'+min).slice(-2)+':'+('0'+sec).slice(-2)}</div>
           </div>
           <div id="controls">
