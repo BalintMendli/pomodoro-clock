@@ -44,6 +44,8 @@ class App extends Component {
       this.setState({isOn: false});
     }
     if(e.target.id==='res'){
+      this.beep.pause();
+      this.beep.currentTime = 0;
       this.stopTimer();
       this.setState({countDown:this.state.session*60, isOn: false});
     }
@@ -58,11 +60,13 @@ class App extends Component {
     if(this.state.countDown>0){
       this.setState({countDown:this.state.countDown-1});
     } else if(this.state.timerLabel==='Session'){
+      this.beep.play();
       this.setState({
         countDown:this.state.break*60,
         timerLabel:'Break'
       });
     } else if(this.state.timerLabel==='Break'){
+      this.beep.play();
       this.setState({
         countDown:this.state.session*60,
         timerLabel:'Session'
@@ -106,6 +110,7 @@ class App extends Component {
             <div id="reset" onClick={this.handleClick}><i id="res" className="fas fa-sync fa-2x"></i></div>
           </div>
         </div>
+         <audio id="beep" src="http://www.peter-weinberg.com/files/1014/8073/6015/BeepSound.wav" ref={(audio) => this.beep=audio}></audio>
       </div>
     );
   }
