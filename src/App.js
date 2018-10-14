@@ -15,9 +15,14 @@ class App extends Component {
     };
     this.timer = 0;
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+  }
+
+  componentDidMount() {
+    this.div.focus();
   }
 
   handleClick(e) {
@@ -55,7 +60,24 @@ class App extends Component {
   }
 
   handleKeyDown(e) {
-    console.log(e.key);
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      this.handleClick({ target: { id: 'res' } });
+    }
+    if (e.key === 'ArrowUp') {
+      this.handleClick({ target: { id: 'seInc' } });
+    }
+    if (e.key === 'ArrowDown') {
+      this.handleClick({ target: { id: 'seDec' } });
+    }
+    if (e.key === '8') {
+      this.handleClick({ target: { id: 'brInc' } });
+    }
+    if (e.key === '2') {
+      this.handleClick({ target: { id: 'brDec' } });
+    }
+    if (e.key === ' ') {
+      this.handleClick({ target: { id: 'stSt' } });
+    }
   }
 
   startTimer(init) {
@@ -94,7 +116,15 @@ class App extends Component {
     const sec = countDown !== 0 ? countDown - 60 * min : 0;
     const minSec = `${`0${min}`.slice(-2)}:${`0${sec}`.slice(-2)}`;
     return (
-      <div className="App">
+      <div
+        className="App"
+        role="button"
+        tabIndex="0"
+        onKeyDown={this.handleKeyDown}
+        ref={c => {
+          this.div = c;
+        }}
+      >
         <Clock
           handleClick={this.handleClick}
           handleKeyDown={this.handleKeyDown}
