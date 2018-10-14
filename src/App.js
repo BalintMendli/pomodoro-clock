@@ -1,116 +1,115 @@
 import React, { Component } from 'react';
 
+import Clock from './Clock';
 import './App.css';
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state={
-      session:25,
-      break:5,
-      countDown:0,
+  constructor(props) {
+    super(props);
+    this.state = {
+      sessionDur: 25,
+      breakDur: 5,
+      countDown: 0,
       isOn: false,
-      timerLabel: 'Session'
-    }
-    this.timer=0;
+      timerLabel: 'Session',
+    };
+    this.timer = 0;
     this.handleClick = this.handleClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
   }
-  handleClick(e){
-    if(e.target.id==='seDec' && this.state.session>1){
-      this.setState({session:this.state.session-1});
+
+  handleClick(e) {
+    const { sessionDur, breakDur, countDown, isOn } = this.state;
+    if (e.target.id === 'seDec' && sessionDur > 1) {
+      this.setState({ sessionDur: sessionDur - 1 });
     }
-    if(e.target.id==='seInc' && this.state.session<60){
-      this.setState({session:this.state.session+1});
+    if (e.target.id === 'seInc' && sessionDur < 60) {
+      this.setState({ sessionDur: sessionDur + 1 });
     }
-    if(e.target.id==='brDec' && this.state.break>1){
-      this.setState({break:this.state.break-1});
+    if (e.target.id === 'brDec' && breakDur > 1) {
+      this.setState({ breakDur: breakDur - 1 });
     }
-    if(e.target.id==='brInc' && this.state.break<60){
-      this.setState({break:this.state.break+1});
+    if (e.target.id === 'brInc' && breakDur < 60) {
+      this.setState({ breakDur: breakDur + 1 });
     }
-    if((e.target.id==='stSt' || e.target.id==='stSt2') && !this.state.isOn){
-      if(this.state.countDown===0){
-        this.startTimer(this.state.session*60);
-      } else{
+    if ((e.target.id === 'stSt' || e.target.id === 'stSt2') && !isOn) {
+      if (countDown === 0) {
+        this.startTimer(sessionDur * 60);
+      } else {
         this.startTimer(-1);
       }
-      this.setState({isOn: true});
+      this.setState({ isOn: true });
     }
-    if((e.target.id==='stSt' || e.target.id==='stSt2') && this.state.isOn){
+    if ((e.target.id === 'stSt' || e.target.id === 'stSt2') && isOn) {
       this.stopTimer();
-      this.setState({isOn: false});
+      this.setState({ isOn: false });
     }
-    if(e.target.id==='res'){
+    if (e.target.id === 'res') {
       this.beep.pause();
       this.beep.currentTime = 0;
       this.stopTimer();
-      this.setState({countDown:this.state.session*60, isOn: false});
+      this.setState({ countDown: sessionDur * 60, isOn: false });
     }
   }
-  startTimer(init){
-    if(init>0){
-      this.setState({countDown:init});
-    }
-    this.timer=setInterval(this.handleTimer,1000)
+
+  handleKeyDown(e) {
+    console.log(e.key);
   }
-  handleTimer(){
-    if(this.state.countDown>0){
-      this.setState({countDown:this.state.countDown-1});
-    } else if(this.state.timerLabel==='Session'){
+
+  startTimer(init) {
+    if (init > 0) {
+      this.setState({ countDown: init });
+    }
+    this.timer = setInterval(this.handleTimer, 1000);
+  }
+
+  handleTimer() {
+    const { sessionDur, breakDur, countDown, timerLabel } = this.state;
+    if (countDown > 0) {
+      this.setState({ countDown: countDown - 1 });
+    } else if (timerLabel === 'Session') {
       this.beep.play();
       this.setState({
-        countDown:this.state.break*60,
-        timerLabel:'Break'
+        countDown: breakDur * 60,
+        timerLabel: 'Break',
       });
-    } else if(this.state.timerLabel==='Break'){
+    } else if (timerLabel === 'Break') {
       this.beep.play();
       this.setState({
-        countDown:this.state.session*60,
-        timerLabel:'Session'
+        countDown: sessionDur * 60,
+        timerLabel: 'Session',
       });
     }
   }
-  stopTimer(){
+
+  stopTimer() {
     clearInterval(this.timer);
   }
+
   render() {
-    let min=(this.state.countDown!==0) ? Math.floor(this.state.countDown/60) : this.state.session;
-    let sec=(this.state.countDown!==0) ? this.state.countDown-60*min : '00';
+    const { sessionDur, breakDur, countDown, timerLabel } = this.state;
+    const min = countDown !== 0 ? Math.floor(countDown / 60) : sessionDur;
+    const sec = countDown !== 0 ? countDown - 60 * min : 0;
+    const minSec = `${`0${min}`.slice(-2)}:${`0${sec}`.slice(-2)}`;
     return (
       <div className="App">
-        <div id="container">
-          <div id="title">Pomodoro Clock</div>
-          <div id="settings">
-            <div id="settings-left">
-              <div id="session-label">Session Length</div>
-              <div id="session-settings">
-                <div id="session-decrement" onClick={this.handleClick}><i id="seDec" className="fas fa-arrow-down fa-2x"></i></div>
-                <div id="session-length">{this.state.session}</div>
-                <div id="session-increment" onClick={this.handleClick}><i id="seInc" className="fas fa-arrow-up fa-2x"></i></div> 
-              </div>
-            </div>
-            <div id="settings-right">
-              <div id="break-label">Break Length</div>
-              <div id="break-settings">
-                <div id="break-decrement" onClick={this.handleClick}><i id="brDec" className="fas fa-arrow-down fa-2x"></i></div>
-                <div id="break-length">{this.state.break}</div>
-                <div id="break-increment" onClick={this.handleClick}><i id="brInc" className="fas fa-arrow-up fa-2x"></i></div>  
-              </div>
-            </div>
-          </div>
-          <div id="display">
-            <div id="timer-label">{this.state.timerLabel}</div>
-            <div id="time-left">{('0'+min).slice(-2)+':'+('0'+sec).slice(-2)}</div>
-          </div>
-          <div id="controls">
-            <div id="start-stop" onClick={this.handleClick}><i id="stSt" className="fas fa-play fa-2x"></i><i id="stSt2" className="fas fa-pause fa-2x"></i></div>
-            <div id="reset" onClick={this.handleClick}><i id="res" className="fas fa-sync fa-2x"></i></div>
-          </div>
-        </div>
-         <audio id="beep" src="http://www.peter-weinberg.com/files/1014/8073/6015/BeepSound.wav" ref={(audio) => this.beep=audio}></audio>
+        <Clock
+          handleClick={this.handleClick}
+          handleKeyDown={this.handleKeyDown}
+          sessionDur={sessionDur}
+          breakDur={breakDur}
+          timerlabel={timerLabel}
+          minSec={minSec}
+        />
+        <audio
+          id="beep"
+          src="http://www.peter-weinberg.com/files/1014/8073/6015/BeepSound.wav"
+          ref={audio => {
+            this.beep = audio;
+          }}
+        />
       </div>
     );
   }

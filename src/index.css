@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Lalezar');
 
-@font-face{
-  font-family:'digital clock font';
-  src: local('digital clock font'), url('digital-7.mono.ttf')  format('opentype');
+@font-face {
+  font-family: 'digital clock font';
+  src: local('digital clock font'), url('digital-7.mono.ttf') format('opentype');
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Lalezar', sans-serif;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
 }
