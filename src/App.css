@@ -13,10 +13,15 @@
   width: 450px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   border: 12px solid;
   border-radius: 20px;
+}
+
+#container::before,
+#container::after {
+  content: '';
 }
 
 #title {
@@ -27,8 +32,13 @@
   width: 100%;
   height: 80px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-content: center;
+}
+
+#settings::before,
+#settings::after {
+  content: '';
 }
 
 #display {
@@ -38,8 +48,13 @@
   border-radius: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-content: center;
+}
+
+#display::before,
+#display::after {
+  content: '';
 }
 
 #controls {
@@ -53,8 +68,15 @@
 #settings-right {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-content: center;
+}
+
+#settings-left::before,
+#settings-left::after,
+#settings-right::before,
+#settings-right::after {
+  content: '';
 }
 
 #break-settings,

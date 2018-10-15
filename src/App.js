@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Clock from './Clock';
 import './App.css';
+import BeepSound from './BeepSound.mp3';
 
 class App extends Component {
   constructor(props) {
@@ -19,9 +20,7 @@ class App extends Component {
     this.startTimer = this.startTimer.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
-    this.beep = new Audio(
-      'http://www.peter-weinberg.com/files/1014/8073/6015/BeepSound.wav'
-    );
+    this.beep = new Audio(BeepSound);
   }
 
   componentDidMount() {
@@ -30,19 +29,36 @@ class App extends Component {
 
   handleClick(e) {
     const { sessionDur, breakDur, countDown, isOn } = this.state;
-    if (e.target.id === 'seDec' && sessionDur > 1) {
+    if (
+      (e.target.id === 'seDec' || e.target.id === 'session-decrement') &&
+      sessionDur > 1
+    ) {
       this.setState({ sessionDur: sessionDur - 1 });
     }
-    if (e.target.id === 'seInc' && sessionDur < 60) {
+    if (
+      (e.target.id === 'seInc' || e.target.id === 'session-increment') &&
+      sessionDur < 60
+    ) {
       this.setState({ sessionDur: sessionDur + 1 });
     }
-    if (e.target.id === 'brDec' && breakDur > 1) {
+    if (
+      (e.target.id === 'brDec' || e.target.id === 'break-decrement') &&
+      breakDur > 1
+    ) {
       this.setState({ breakDur: breakDur - 1 });
     }
-    if (e.target.id === 'brInc' && breakDur < 60) {
+    if (
+      (e.target.id === 'brInc' || e.target.id === 'break-increment') &&
+      breakDur < 60
+    ) {
       this.setState({ breakDur: breakDur + 1 });
     }
-    if ((e.target.id === 'stSt' || e.target.id === 'stSt2') && !isOn) {
+    if (
+      (e.target.id === 'stSt' ||
+        e.target.id === 'stSt2' ||
+        e.target.id === 'start-stop') &&
+      !isOn
+    ) {
       if (countDown === 0) {
         this.startTimer(sessionDur * 60);
       } else {
@@ -50,11 +66,16 @@ class App extends Component {
       }
       this.setState({ isOn: true });
     }
-    if ((e.target.id === 'stSt' || e.target.id === 'stSt2') && isOn) {
+    if (
+      (e.target.id === 'stSt' ||
+        e.target.id === 'stSt2' ||
+        e.target.id === 'start-stop') &&
+      isOn
+    ) {
       this.stopTimer();
       this.setState({ isOn: false });
     }
-    if (e.target.id === 'res') {
+    if (e.target.id === 'res' || e.target.id === 'reset') {
       this.beep.pause();
       this.beep.currentTime = 0;
       this.stopTimer();
