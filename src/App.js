@@ -19,6 +19,9 @@ class App extends Component {
     this.startTimer = this.startTimer.bind(this);
     this.handleTimer = this.handleTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+    this.beep = new Audio(
+      'http://www.peter-weinberg.com/files/1014/8073/6015/BeepSound.wav'
+    );
   }
 
   componentDidMount() {
@@ -118,7 +121,7 @@ class App extends Component {
     return (
       <div
         className="App"
-        role="button"
+        role="tabpanel"
         tabIndex="0"
         onKeyDown={this.handleKeyDown}
         ref={c => {
@@ -132,13 +135,6 @@ class App extends Component {
           breakDur={breakDur}
           timerlabel={timerLabel}
           minSec={minSec}
-        />
-        <audio
-          id="beep"
-          src="http://www.peter-weinberg.com/files/1014/8073/6015/BeepSound.wav"
-          ref={audio => {
-            this.beep = audio;
-          }}
         />
       </div>
     );
