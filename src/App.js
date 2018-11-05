@@ -31,25 +31,29 @@ class App extends Component {
     const { sessionDur, breakDur, countDown, isOn } = this.state;
     if (
       (e.target.id === 'seDec' || e.target.id === 'session-decrement') &&
-      sessionDur > 1
+      sessionDur > 1 &&
+      !isOn
     ) {
       this.setState({ sessionDur: sessionDur - 1 });
     }
     if (
       (e.target.id === 'seInc' || e.target.id === 'session-increment') &&
-      sessionDur < 60
+      sessionDur < 60 &&
+      !isOn
     ) {
       this.setState({ sessionDur: sessionDur + 1 });
     }
     if (
       (e.target.id === 'brDec' || e.target.id === 'break-decrement') &&
-      breakDur > 1
+      breakDur > 1 &&
+      !isOn
     ) {
       this.setState({ breakDur: breakDur - 1 });
     }
     if (
       (e.target.id === 'brInc' || e.target.id === 'break-increment') &&
-      breakDur < 60
+      breakDur < 60 &&
+      !isOn
     ) {
       this.setState({ breakDur: breakDur + 1 });
     }
